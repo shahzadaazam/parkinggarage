@@ -107,7 +107,27 @@ public class ParkingStructure {
 
     }
 
-    public ParkingStructure getParkingStructure() {
+
+
+    //Generates 18 character long random ticket string
+    private String generateParkingTicket() {
+
+        //Reference: https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-z-and-0-9-in-java
+
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+
+        while (salt.length() < 18) {    //length of random string
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+    }
+
+    //Singleton implementation
+    public static ParkingStructure getParkingStructure() {
         if (ps == null) {
             ps = new ParkingStructure();
             return ps;
@@ -121,6 +141,10 @@ public class ParkingStructure {
         return (availableSpaces.peek() == null) ? null : availableSpaces.pop();
     }
 
+    //returns unwanted available parking space to available stack
+    public void returnAvailableParkingSpace(ParkingSpace ps) {
+        availableSpaces.push(ps);
+    }
 
     //returns true if parking structure/garage is full
     public boolean isFull() {
@@ -134,17 +158,29 @@ public class ParkingStructure {
     //returns parking ticket string
     public String AddCar(Car car, ParkingSpace ps) {
 
-        return "";
+        if (ps.parkCar(car)) {
+            String parkingTicket = generateParkingTicket();
+            parkingMap.put(parkingTicket, ps);
+            System.out.println("Parked successfully");
+            return parkingTicket;
+        }
+        System.out.println("Unable to park in this spot");
+        return null;
     }
 
     //returns removed Car
-    public Car RemoveCar(ParkingSpace ps) {
+    public Car RemoveCar(ParkingSpace ps, String parkingTicket) {
 
+        if (ps.equals(parkingMap.get(parkingTicket))) {
+            System.out.println("Unparking Car");
+            return parkingMap.get(parkingTicket).unparkCar();
+        }
+        System.out.println("Cannot unpark car. Parking space does not match parking ticket");
         return null;
     }
 
     //returns calculated cost in double
-    public double ParkingCost(Level level, ParkingSpace ps) {
+    public double ParkingCost(ParkingSpace ps) {
 
         return 0.0;
     }

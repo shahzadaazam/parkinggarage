@@ -23,9 +23,33 @@ As a bonus, please provide the unit test cases against these API functions
  
 */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        //Getting parking structure instance
+        ParkingStructure parkingGarage = ParkingStructure.getParkingStructure();
+
+        //Creating Car
+        Car s197Mustang = new Car("IMWV84", "Ford", "Mustang V6", "2005");
+
+        //Creating Owner
+        List<Car> azamcars = new ArrayList<>();
+        azamcars.add(s197Mustang);
+        Owner azam = new Owner("Azam", azamcars, false);
+
+        //Attempting to add car to parking garage
+        ParkingSpace ps = parkingGarage.getAvailableParkingSpace();
+        String IMWV84_ticket = parkingGarage.AddCar(s197Mustang, ps);
+        System.out.println("Azam's ticket is: " + IMWV84_ticket);
+
+        //Attempting to unpark car
+        s197Mustang = parkingGarage.RemoveCar(ps, IMWV84_ticket);
+        System.out.println("Unparked car is a " + s197Mustang.getYear() + " " + s197Mustang.getMake() + " " + s197Mustang.getModel());
+        
+
     }
 }

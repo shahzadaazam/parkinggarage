@@ -16,4 +16,19 @@ public class Car {
         this.year = year;
     }
 
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getYear() {
+        return year;
+    }
 }

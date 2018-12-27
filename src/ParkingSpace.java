@@ -8,12 +8,12 @@ public abstract class ParkingSpace {
     private Date parkDateTime;
     private Level level;
 
-    private boolean isVacant() {
+    private boolean isEmpty() {
         return parkedCar == null;
     }
 
     public boolean parkCar(Car car) {
-        if (!this.isVacant()) {
+        if (!this.isEmpty()) {
             return false;
         }
         this.parkedCar = car;
