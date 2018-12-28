@@ -25,6 +25,7 @@ As a bonus, please provide the unit test cases against these API functions
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -46,10 +47,15 @@ public class Main {
         String IMWV84_ticket = parkingGarage.AddCar(s197Mustang, ps);
         System.out.println("Azam's ticket is: " + IMWV84_ticket);
 
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("parking cost is: $" + parkingGarage.ParkingCost(ps));
+
         //Attempting to unpark car
         s197Mustang = parkingGarage.RemoveCar(ps, IMWV84_ticket);
         System.out.println("Unparked car is a " + s197Mustang.getYear() + " " + s197Mustang.getMake() + " " + s197Mustang.getModel());
-        
-
     }
 }

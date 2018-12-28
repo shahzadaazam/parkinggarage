@@ -182,7 +182,9 @@ public class ParkingStructure {
     //returns calculated cost in double
     public double ParkingCost(ParkingSpace ps) {
 
-        return 0.0;
+        long parkedTimeMillis = (new Date().getTime() - ps.getParkDateTime().getTime());
+        double parkingCost = ps.getHourlyRate()*((parkedTimeMillis / (double)(1000*60*60)));
+        return parkingCost;
     }
 
     public HashMap<String, Owner> GetOwner(Level level, ParkingSpace ps) {
